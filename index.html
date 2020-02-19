@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Simulador de Autônomos</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style2.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/joint.css">
+</head>
+<body style="background-color: #000;">
+    <div class="container-fluid" style=";width: 100%;height: 100%;">
+            <div class="row">
+                   
+                     <div style="color:white;text-align: center;">
+                            <h1>Simulador de Autônomos - AFD</h1>
+                     </div>
+                    
+                    
+            </div>
+
+            <div  class ="row menu">
+                    <div class="col-md-8" >
+                    <button type="button" class="btn btn-default botoes" name = "add" id="btnAddEstado" onclick="inserirEstado()" title="Adicionar Estado..." >Adicionar Estado <img src="assets/images/addE.png" class="img-rounded"></button>
+                    <button type="button" class="btn btn-default botoes" name = "del" id="btnDelEstado" onclick="selecionaEstado()" title="Deletar Estado...">Deletar Estado <img src="assets/images/delE.png"  class="img-rounded"></button>
+                    <button type="button" class="btn btn-default botoes" name = "add" id="btnAddTransicao" onclick ="selecionaTransicao()" title="Adicionar Transicão...">Adicionar Transicão <img src="assets/images/addT2.png" class="img-rounded"></button>
+                    <button type="button" class="btn btn-default botoes" name = "final" id="btnEstadoFinal" onclick ="selecionaEstadoFinal()" title="Selecione quais são os estados finais...">Configurar Estados Finais <img src="assets/images/estF.png" class="img-rounded"></button>
+                    </div>
+                    <div class="col-md-4" id="dicas"> DICA: Posicione o mouse em cima das transições e dê um clique para habilitar a edição da posição. Feito isso arraste o botão verde de modo que a transição fique numa posição desejavel. </div>
+            </div>
+                    
+
+            
+
+            <div class="row">
+                <div class="col-md-2" id="menuEsquerdo">
+                    
+                            <label>Digite uma cadeia:</label>
+                            <input type="text" name="cadeia" id ="cadeiaTest" placeholder="Digite aqui..." /></br>
+                            <button class="btn btn-primary btn-block" id="submeterTransicao" type="button" name = "del"  onclick="valida(cadeiaTest)" title="Testar cadeia...">Testar <img src="assets/images/test.png"  class="img-rounded"></button>
+                            <label>Resultado:</label>
+                            <input type="text" name="cadeia" class="resposta" id="resposta" readonly="readonly" placeholder="Resultado..."/>
+                            
+                            <label>Historico:</label><textarea id="textHistorico" style="width: 100%;resize: none;height: 50%;" readonly="readonly"></textarea>
+                            <button class="btn btn-primary btn-block" type="button" id="btnLimparHistorico" onclick="limparHistorico()" title="Limpar Historico...">Limpar Historico <img src="assets/images/clear.png"  class="img-rounded"></button>
+                            
+                                                              
+                </div>
+                
+                <div id="centro" class="col-md-10">
+                    <div id="diagramContainer" class="col-md-1">
+                        
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div id="rodape"> 
+                            Desenvolvidor por: Adalcino Jr, Caio Cesar e Lucas Rocha. <br> Equipe ACL - Todos os direitos reservados.
+                </div>
+                <div id="rodape" style="margin: auto"> Material utilizado:
+                JOINTJS - <a href="https://www.jointjs.com/" target="_blank">https://www.jointjs.com/</a>
+                BACKBONE - <a href="http://backbonejs.org/" target="_blank">http://backbonejs.org/</a>
+                LODASH  - <a href="https://lodash.com/" target="_blank">https://lodash.com/</a>
+                JQUERY  - <a href="https://jquery.com/" target="_blank">https://jquery.com/</a>
+                JQUERYUI - <a href="https://jqueryui.com/" target="_blank">https://jqueryui.com/</a>
+                </div>
+            </div>
+
+            
+    </div>
+
+    <div id="menuEstadoFinal" title="SELECIONE O ESTADO!" class="row">
+            <div> 
+                            <table class="table table-responsive table-hover" id="saoFinais">
+                                <th>
+                                    Estados finais
+                                </th>
+                                <th>
+                                    Ação
+                                </th>
+                            </table>
+            </div>
+
+            <div> 
+                            <table class="table table-responsive">
+                                <th>Selecione o estado que deseja adicionar como final!</th>
+                                <tr>
+                                    <td>
+                                        <select id="selecinarEstadosFinal">
+                                
+                                        </select>   
+                                    </td>
+                                </tr>
+                            </table>
+            </div>
+    </div>
+
+    <div id="menuDelete" title="DELETAR ESTADOS">
+            Selecione o estado que deseja deletar!<br>
+            <select id="estadoSelecionado">
+            S
+            </select>
+    </div>
+        
+        <div id="menuTransicao" title="ADICIONAR TRANSICAO">
+            De:
+            <select id="estadosOrigem">
+            </select>
+            Recebendo:<input type="text" name="" id = "transicaoAdicionada" size = 1 maxlength=1 />
+            Para:
+            <select id="estadosDestino">
+            </select>           
+        </div>
+        
+        <div id = "dialogDelete" title="Transicão excluir com sucesso !!!"></div>
+
+        <script type="text/javascript" src="assets/js/jquery.js"></script>
+        <script type="text/javascript" src="assets/js/jquery-ui.js"></script>
+        <script type="text/javascript" src="assets/js/lodash.js"></script>
+        <script type="text/javascript" src="assets/js/backbone.js"></script>
+        <script type="text/javascript" src="assets/js/joint.js"></script>
+        <script type="text/javascript" src="assets/js/eventos.js"></script>
+        
+        
+
+</body>
+</html>
